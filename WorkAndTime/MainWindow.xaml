@@ -5,8 +5,69 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:WorkAndTime"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
-    <Grid>
-        <Button FontSize="26">Text 1</Button>
+        Title="MainWindow" Height="550" Width="550">
+    <Grid Background="RosyBrown">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="4*"/>
+            <RowDefinition Height="1*"/>
+        </Grid.RowDefinitions>
+        <Grid Grid.Row="0">
+            <Grid.RowDefinitions>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+            <Grid Grid.Row="0" Background="Gray" Margin="10">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="8*"/>
+                    <RowDefinition Height="20*"/>
+                </Grid.RowDefinitions>
+                <TextBlock Grid.Row="0" HorizontalAlignment="Center" FontSize="26">History</TextBlock>
+                <ListBox Grid.Row="1" x:Name="ListBox_History" Margin="5" Background="LightGray"/>
+            </Grid>
+            <Grid Grid.Row="1" Background="LightBlue" Margin="10">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="4*"/>
+                    <RowDefinition Height="1*"/>
+                </Grid.RowDefinitions>
+                <ListBox Grid.Row="0" Margin="5" Background="LightCyan" x:Name="ListBox_Projects"></ListBox>
+                <Grid Grid.Row="1">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+
+                    <Border Grid.Column="2" CornerRadius="8" BorderBrush="SeaGreen" BorderThickness="1" VerticalAlignment="Center">
+                        <TextBox BorderBrush="Transparent" Background="Transparent" BorderThickness="0" x:Name="TextBox_ProjectName"></TextBox>
+                    </Border>
+                    <Button Grid.Column="3" Width="50" Height="20" VerticalAlignment="Center" x:Name="Button_AddProject">Add</Button>
+                    <Button Grid.Column="0" Width="50" Height="20" VerticalAlignment="Center" x:Name="Button_RemoveProject">Remove</Button>
+                </Grid>
+            </Grid>
+            <Grid Grid.Row="3">
+                <Grid Background="LightGray" Margin="10">
+                    <TextBlock VerticalAlignment="Center" HorizontalAlignment="Center"  FontSize="48" x:Name="TextBlock_Timer">00:00:00</TextBlock>
+                </Grid>
+            </Grid>
+        </Grid>
+        <Grid Grid.Row="1" Margin="10">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+
+            <Button Grid.Column="0" Grid.Row="0" VerticalAlignment="Center" Width="100" Height="40" x:Name="Button_StopTimer">Stop</Button>
+            <Button Grid.Column="1" Grid.Row="0" VerticalAlignment="Center" Width="100" Height="40" x:Name="Button_PauseTimer">Pause</Button>
+            <Button Grid.Column="2" Grid.Row="0" VerticalAlignment="Center" Width="100" Height="40" x:Name="Button_StartTimer">Start</Button>
+            <Button Grid.Column="1" Grid.Row="1" VerticalAlignment="Center" Width="100" Height="40" x:Name="Button_ShowResults">Results</Button>
+
+        </Grid>        
     </Grid>
 </Window>
