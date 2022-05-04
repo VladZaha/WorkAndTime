@@ -23,28 +23,75 @@
                     <RowDefinition Height="20*"/>
                 </Grid.RowDefinitions>
                 <TextBlock Grid.Row="0" HorizontalAlignment="Center" FontSize="26">History</TextBlock>
-                <ListBox Grid.Row="1" x:Name="ListBox_History" Margin="5" Background="LightGray"/>
+                <ListBox Grid.Row="1" x:Name="ListBox_History" Margin="5" Background="LightGray">
+                    <ListBox.ItemTemplate>
+                        <DataTemplate>
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="1*"/>
+                                    <ColumnDefinition Width="1*"/>
+                                    <ColumnDefinition Width="1*"/>
+                                </Grid.ColumnDefinitions>
+                                <TextBlock Grid.Column="0" Text="{Binding Path=TimePeriod}" Margin="5 0 0 0"></TextBlock>
+                                <TextBlock Grid.Column="1" Text="{Binding Path=Date}" Margin="5 0 0 0"></TextBlock>
+                                <TextBlock Grid.Column="2" Text="{Binding Path=Progress}" Margin="5 0 0 0"></TextBlock>
+                                <Button Grid.Column="3" Margin="50 0 0 0">Show</Button>
+                            </Grid>
+                        </DataTemplate>
+                        
+                    </ListBox.ItemTemplate>
+                </ListBox>
             </Grid>
             <Grid Grid.Row="1" Background="LightBlue" Margin="10">
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="4*"/>
-                    <RowDefinition Height="1*"/>
+                    <RowDefinition Height="2*"/>
+                    <RowDefinition Height="2*"/>
                 </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="4*"/>
+                    <ColumnDefinition Width="1*"/>
+                </Grid.ColumnDefinitions>
+
                 <ListBox Grid.Row="0" Margin="5" Background="LightCyan" x:Name="ListBox_Projects"></ListBox>
-                <Grid Grid.Row="1">
+
+                <Grid Grid.Column="0" Grid.Row="1">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition/>
                         <ColumnDefinition/>
-                        <ColumnDefinition/>
-                        <ColumnDefinition/>
                     </Grid.ColumnDefinitions>
-
-                    <Border Grid.Column="2" CornerRadius="8" BorderBrush="SeaGreen" BorderThickness="1" VerticalAlignment="Center">
+                    <Grid.RowDefinitions>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                    </Grid.RowDefinitions>
+                    <TextBlock VerticalAlignment="Center" HorizontalAlignment="Left" Margin="5">Project:</TextBlock>
+                    <Border Grid.Column="0" Grid.Row="0" CornerRadius="8" BorderBrush="SeaGreen" BorderThickness="2" VerticalAlignment="Center" Width="138" HorizontalAlignment="Right">
                         <TextBox BorderBrush="Transparent" Background="Transparent" BorderThickness="0" x:Name="TextBox_ProjectName"></TextBox>
                     </Border>
-                    <Button Grid.Column="3" Width="50" Height="20" VerticalAlignment="Center" x:Name="Button_AddProject">Add</Button>
-                    <Button Grid.Column="0" Width="50" Height="20" VerticalAlignment="Center" x:Name="Button_RemoveProject">Remove</Button>
+
+                    <TextBlock Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="5">Date:</TextBlock>
+                    <Border Grid.Column="1" Grid.Row="0" CornerRadius="8" BorderBrush="SeaGreen" BorderThickness="2" VerticalAlignment="Center" Width="150" HorizontalAlignment="Right">
+                        <DatePicker Background="Transparent" BorderBrush="Transparent" BorderThickness="0" x:Name="DatePicker_ProjectDate"></DatePicker>
+                    </Border>
+
+                    <TextBlock Grid.Column="0" Grid.Row="1" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="5">Description:</TextBlock>
+                    <Border Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="2" CornerRadius="8" BorderBrush="SeaGreen" BorderThickness="2" VerticalAlignment="Center" Margin="75 0 0 0">
+                        <TextBox BorderBrush="Transparent" Background="Transparent" BorderThickness="0" x:Name="TextBox_ProjectDescription"></TextBox>
+                    </Border>
                 </Grid>
+                
+                <Grid Grid.Column="1" Grid.RowSpan="2">
+                    <Grid.RowDefinitions>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                    </Grid.RowDefinitions>
+
+                    
+                <Button Grid.Row="2" Width="50" Height="20" VerticalAlignment="Center" x:Name="Button_AddProject">Add</Button>
+                <Button Grid.Column="0" Width="50" Height="20" VerticalAlignment="Center" x:Name="Button_RemoveProject" Grid.Row="1">Remove</Button>
+                </Grid>
+
+
             </Grid>
             <Grid Grid.Row="3">
                 <Grid Background="LightGray" Margin="10">
@@ -54,20 +101,19 @@
         </Grid>
         <Grid Grid.Row="1" Margin="10">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition/>
-                <ColumnDefinition/>
-                <ColumnDefinition/>
+                <ColumnDefinition Width="8*"/>
+                <ColumnDefinition Width="1*"/>
+                <ColumnDefinition Width="8*"/>
             </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
                 <RowDefinition/>
                 <RowDefinition/>
             </Grid.RowDefinitions>
 
-            <Button Grid.Column="0" Grid.Row="0" VerticalAlignment="Center" Width="100" Height="40" x:Name="Button_StopTimer">Stop</Button>
-            <Button Grid.Column="1" Grid.Row="0" VerticalAlignment="Center" Width="100" Height="40" x:Name="Button_PauseTimer">Pause</Button>
-            <Button Grid.Column="2" Grid.Row="0" VerticalAlignment="Center" Width="100" Height="40" x:Name="Button_StartTimer">Start</Button>
-            <Button Grid.Column="1" Grid.Row="1" VerticalAlignment="Center" Width="100" Height="40" x:Name="Button_ShowResults">Results</Button>
+            <Button Grid.Column="0" Grid.Row="0" VerticalAlignment="Center" Width="100" Height="40" x:Name="Button_StopTimer" HorizontalAlignment="Right">Stop</Button>
+            <Button Grid.Column="2" Grid.Row="0" VerticalAlignment="Center" Width="100" Height="40" x:Name="Button_StartTimer" HorizontalAlignment="Left">Start</Button>
+            <Button Grid.Column="0" Grid.ColumnSpan="3" Grid.Row="1" VerticalAlignment="Center" Width="100" Height="40" x:Name="Button_ShowResults">Results</Button>
 
-        </Grid>        
+        </Grid>
     </Grid>
 </Window>
