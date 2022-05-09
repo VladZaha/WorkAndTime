@@ -24,5 +24,9 @@ namespace WorkAndTime
         {
             InitializeComponent();
         }
+
+        private void Button_ShowResults_Click (object sender, RoutedEventArgs e) {
+
+        }
     }
 }
