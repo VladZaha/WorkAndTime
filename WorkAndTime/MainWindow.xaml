@@ -19,14 +19,6 @@
                             <MenuItem Header="Never"/>
                         </MenuItem>
                     </MenuItem>
-                    <!--<Menu 
-                        -->
-                    <!--<MenuItem Content="Every 30s"/>
-                        <MenuItem Content="Every 10s"/>
-                        <MenuItem Content="Every 5s"/>
-                        <MenuItem Content="Never"/>-->
-                    <!--
-                    </Menu>-->
                 </Menu>
             </ToolBar>
         </ToolBarTray>
