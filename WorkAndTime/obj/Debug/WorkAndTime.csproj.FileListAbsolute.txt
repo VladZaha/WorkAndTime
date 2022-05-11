@@ -1,0 +1,15 @@
+C:\Users\vladz\Source\Repos\VladZaha\WorkAndTime\WorkAndTime\bin\Debug\WorkAndTime.exe.config
+C:\Users\vladz\Source\Repos\VladZaha\WorkAndTime\WorkAndTime\bin\Debug\WorkAndTime.exe
+C:\Users\vladz\Source\Repos\VladZaha\WorkAndTime\WorkAndTime\bin\Debug\WorkAndTime.pdb
+C:\Users\vladz\Source\Repos\VladZaha\WorkAndTime\WorkAndTime\obj\Debug\WorkAndTime.csproj.AssemblyReference.cache
+C:\Users\vladz\Source\Repos\VladZaha\WorkAndTime\WorkAndTime\obj\Debug\MainWindow.g.cs
+C:\Users\vladz\Source\Repos\VladZaha\WorkAndTime\WorkAndTime\obj\Debug\App.g.cs
+C:\Users\vladz\Source\Repos\VladZaha\WorkAndTime\WorkAndTime\obj\Debug\WorkAndTime_MarkupCompile.cache
+C:\Users\vladz\Source\Repos\VladZaha\WorkAndTime\WorkAndTime\obj\Debug\WorkAndTime_MarkupCompile.lref
+C:\Users\vladz\Source\Repos\VladZaha\WorkAndTime\WorkAndTime\obj\Debug\MainWindow.baml
+C:\Users\vladz\Source\Repos\VladZaha\WorkAndTime\WorkAndTime\obj\Debug\WorkAndTime.g.resources
+C:\Users\vladz\Source\Repos\VladZaha\WorkAndTime\WorkAndTime\obj\Debug\WorkAndTime.Properties.Resources.resources
+C:\Users\vladz\Source\Repos\VladZaha\WorkAndTime\WorkAndTime\obj\Debug\WorkAndTime.csproj.GenerateResource.cache
+C:\Users\vladz\Source\Repos\VladZaha\WorkAndTime\WorkAndTime\obj\Debug\WorkAndTime.csproj.CoreCompileInputs.cache
+C:\Users\vladz\Source\Repos\VladZaha\WorkAndTime\WorkAndTime\obj\Debug\WorkAndTime.exe
+C:\Users\vladz\Source\Repos\VladZaha\WorkAndTime\WorkAndTime\obj\Debug\WorkAndTime.pdb
