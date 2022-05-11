@@ -1,20 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Timers;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
-using System.Windows.Threading;
 
 namespace WorkAndTime
 {
@@ -23,12 +10,6 @@ namespace WorkAndTime
     /// </summary>
     public partial class MainWindow : Window
     {
-        public class History
-        {
-            public string TimePeriod { get; set; }
-            public DateTime Date { get; set; }
-            public string Progress { get; set; }
-        }
         private Stopwatch _stopWatch;
         private Timer _timer;
 
@@ -49,7 +30,7 @@ namespace WorkAndTime
 
         private void Button_ShowResults_Click(object sender, RoutedEventArgs e)
         {
-            ListBox_History.Items.Add(new History() { TimePeriod = _stopWatch.Elapsed.ToString(@"hh\:mm\:ss"), Date = DateTime.Now, Progress = "0%" });
+            ListBox_History.Items.Add(new History() { timePeriod = _stopWatch.Elapsed.ToString(@"hh\:mm\:ss"), date = DateTime.Now, Progress = "0%" });
             _stopWatch = new Stopwatch();
             _timer = new Timer(1000);
             TextBlock_Timer.Text = "00:00:00";
@@ -75,5 +56,6 @@ namespace WorkAndTime
             Button_StopTimer.IsEnabled = false;
             Button_ShowResults.IsEnabled = true;
         }
+
     }
 }
