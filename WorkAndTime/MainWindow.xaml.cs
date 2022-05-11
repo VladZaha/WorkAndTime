@@ -1,5 +1,7 @@
-﻿using System;
+﻿using Effort;
+using System;
 using System.Diagnostics;
+using System.Linq;
 using System.Timers;
 using System.Windows;
 
@@ -12,10 +14,18 @@ namespace WorkAndTime
     {
         private Stopwatch _stopWatch;
         private Timer _timer;
-
+        //Database context
+        private ProjectContext _context;
         public MainWindow()
         {
             InitializeComponent();
+            var conn = DbConnectionFactory.CreateTransient();
+            _context = new ProjectContext(conn);
+
+            //_context.Projects.Add(new Project() { Id=1,Name = "Project 1" });
+            //_context.Projects.Add(new Project() { Id =2, Name = "Project 2" });
+            //_context.SaveChanges();
+            //ListBox_Projects.ItemsSource = _context.Projects.Select(c=>c.Name).ToList();
 
             _stopWatch = new Stopwatch();
             _timer = new Timer(1000);
@@ -30,7 +40,7 @@ namespace WorkAndTime
 
         private void Button_ShowResults_Click(object sender, RoutedEventArgs e)
         {
-            ListBox_History.Items.Add(new History() { timePeriod = _stopWatch.Elapsed.ToString(@"hh\:mm\:ss"), date = DateTime.Now, Progress = "0%" });
+            ListBox_History.Items.Add(new History() { TimePeriod = _stopWatch.Elapsed.ToString(@"hh\:mm\:ss"), Date = DateTime.Now, Progress = "0%" });
             _stopWatch = new Stopwatch();
             _timer = new Timer(1000);
             TextBlock_Timer.Text = "00:00:00";
