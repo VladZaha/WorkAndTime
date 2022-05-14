@@ -4,6 +4,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Timers;
 using System.Windows;
+using System.Windows.Threading;
 
 namespace WorkAndTime
 {
@@ -12,8 +13,9 @@ namespace WorkAndTime
     /// </summary>
     public partial class MainWindow : Window
     {
-        private Stopwatch _stopWatch;
-        private Timer _timer;
+        DispatcherTimer timer;
+        DateTime startTime;
+
         //Database context
         private ProjectContext _context;
         public MainWindow()
@@ -27,44 +29,35 @@ namespace WorkAndTime
             //_context.SaveChanges();
             //ListBox_Projects.ItemsSource = _context.Projects.Select(c=>c.Name).ToList();
 
-            _stopWatch = new Stopwatch();
-            _timer = new Timer(1000);
             Button_StopTimer.IsEnabled = false;
             Button_ShowResults.IsEnabled = false;
-        }
-
-        private void OnTimerElapse(object sender, ElapsedEventArgs e)
-        {
-            Application.Current.Dispatcher.Invoke(() => TextBlock_Timer.Text = _stopWatch.Elapsed.ToString(@"hh\:mm\:ss"));
         }
 
         private void Button_ShowResults_Click(object sender, RoutedEventArgs e)
         {
-            ListBox_History.Items.Add(new History() { TimePeriod = _stopWatch.Elapsed.ToString(@"hh\:mm\:ss"), Date = DateTime.Now, Progress = "0%" });
-            _stopWatch = new Stopwatch();
-            _timer = new Timer(1000);
-            TextBlock_Timer.Text = "00:00:00";
-            Button_StartTimer.IsEnabled = true;
-            Button_StopTimer.IsEnabled = false;
-            Button_ShowResults.IsEnabled = false;
+
         }
         private void Button_StartTimer_Click(object sender, RoutedEventArgs e)
         {
-            _stopWatch.Start();
-            _timer.Start();
-            _timer.Elapsed += OnTimerElapse;
+            startTime = DateTime.Now;
+            timer = new DispatcherTimer();
+            timer.Interval = TimeSpan.FromSeconds(1);
+            timer.Tick += timer_Tick;
+            timer.Start();
             Button_StartTimer.IsEnabled = false;
             Button_StopTimer.IsEnabled = true;
-            Button_ShowResults.IsEnabled = false;
         }
-
+        private void timer_Tick(object sender, EventArgs e)
+        {
+            TextBlock_Timer.Text = (DateTime.Now - startTime).ToString(@"hh\:mm\:ss");
+        }
         private void Button_StopTimer_Click(object sender, RoutedEventArgs e)
         {
-            _stopWatch.Stop();
-            _timer.Stop();
-            Button_StartTimer.IsEnabled = true;
+            ListBox_History.Items.Add(new History() { TimePeriod = (DateTime.Now - startTime).ToString(@"hh\:mm\:ss"), Date = DateTime.Now, Progress = "0%" });
+            TextBlock_Timer.Text = "00:00:00";
+            timer.Stop();
             Button_StopTimer.IsEnabled = false;
-            Button_ShowResults.IsEnabled = true;
+            Button_StartTimer.IsEnabled = true;
         }
 
     }
