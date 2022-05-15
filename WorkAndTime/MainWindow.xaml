@@ -12,11 +12,11 @@
             <ToolBar>
                 <Menu>
                     <MenuItem Header="Settings">
-                        <MenuItem Header="Screenshots">
-                            <MenuItem Header="Every 30s"/>
-                            <MenuItem Header="Every 10s"/>
-                            <MenuItem Header="Every 5s"/>
-                            <MenuItem Header="Never"/>
+                        <MenuItem Header="Screenshots ">
+                            <MenuItem x:Name="menu30" x:FieldModifier="public" Header="Every 30s"/>
+                            <MenuItem x:Name="menu10" x:FieldModifier="public" Header="Every 10s"/>
+                            <MenuItem x:Name="menu5" x:FieldModifier="public" Header="Every 5s"/>
+                            <MenuItem x:Name="menuNever" x:FieldModifier="public" Header="Never"/>
                         </MenuItem>
                     </MenuItem>
                 </Menu>
