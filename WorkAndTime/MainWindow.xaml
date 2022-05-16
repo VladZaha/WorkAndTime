@@ -13,10 +13,10 @@
                 <Menu>
                     <MenuItem Header="Settings">
                         <MenuItem Header="Screenshots ">
-                            <MenuItem x:Name="menu30" x:FieldModifier="public" Header="Every 30s"/>
-                            <MenuItem x:Name="menu10" x:FieldModifier="public" Header="Every 10s"/>
-                            <MenuItem x:Name="menu5" x:FieldModifier="public" Header="Every 5s"/>
-                            <MenuItem x:Name="menuNever" x:FieldModifier="public" Header="Never"/>
+                            <MenuItem x:Name="menu30" x:FieldModifier="public" Click="menuTimer_Click" Header="Every 30s"/>
+                            <MenuItem x:Name="menu10" x:FieldModifier="public" Click="menuTimer_Click" Header="Every 10s"/>
+                            <MenuItem x:Name="menu5" x:FieldModifier="public" Click="menuTimer_Click" Header="Every 5s"/>
+                            <MenuItem x:Name="menuNever" x:FieldModifier="public" Click="menuTimer_Click" Header="Never"/>
                         </MenuItem>
                     </MenuItem>
                 </Menu>
@@ -64,7 +64,7 @@
                                     <TextBlock Grid.Column="0" Text="{Binding Path=TimePeriod}" Margin="5 0 10 0"></TextBlock>
                                     <TextBlock Grid.Column="1" Text="{Binding Path=Date}" Margin="5 0 10 0"></TextBlock>
                                     <TextBlock Grid.Column="2" Text="{Binding Path=Progress}" Margin="5 0 10 0"></TextBlock>
-                                    <Button Grid.Column="3" Margin="50 0 0 0">Show</Button>
+                                    <Button Grid.Column="3" Margin="50 0 0 0" Tag="{Binding Path=Project.Name}" Click="ShowScreenshots_Click">Show</Button>
                                 </Grid>
                             </DataTemplate>
 
@@ -81,7 +81,13 @@
                         <ColumnDefinition Width="1*"/>
                     </Grid.ColumnDefinitions>
 
-                    <ListBox Grid.Row="0" Margin="5" Background="LightCyan" x:Name="ListBox_Projects"></ListBox>
+                    <ListBox Grid.Row="0" Margin="5" Background="LightCyan" x:Name="ListBox_Projects">
+                        <ListBox.ItemTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding Path=Name}"></TextBlock>
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
+                    </ListBox>
 
                     <Grid Grid.Column="0" Grid.Row="1">
                         <Grid.ColumnDefinitions>
@@ -116,8 +122,8 @@
                         </Grid.RowDefinitions>
 
 
-                        <Button Grid.Row="2" Width="60" Height="30" VerticalAlignment="Center" x:Name="Button_AddProject" FontFamily="Ink Free" Background="#FF7CDDA2" FontSize="15">Add</Button>
-                        <Button Grid.Column="0" Width="60" Height="30" VerticalAlignment="Center" x:Name="Button_RemoveProject" Grid.Row="1" FontFamily="Ink Free" Background="#FFFF8888" FontSize="15">Remove</Button>
+                        <Button Grid.Row="2" Width="60" Height="30" VerticalAlignment="Center" x:Name="Button_AddProject" FontFamily="Ink Free" Background="#FF7CDDA2" FontSize="15" Click="Button_AddProject_Click">Add</Button>
+                        <Button Grid.Column="0" Width="60" Height="30" VerticalAlignment="Center" x:Name="Button_RemoveProject" Grid.Row="1" FontFamily="Ink Free" Background="#FFFF8888" FontSize="15" Click="Button_RemoveProject_Click">Remove</Button>
                     </Grid>
 
 

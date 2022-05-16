@@ -17,6 +17,6 @@ namespace WorkAndTime
         public int ProjectId { get; set; }
         [NotMapped]
         public string Progress { get; set; }
-        public Project Project { get; set; }
+        public virtual Project Project { get; set; }
     }
 }
