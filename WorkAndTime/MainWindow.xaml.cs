@@ -46,11 +46,13 @@ namespace WorkAndTime
             Button_StopTimer.IsEnabled = true;
 
             //Start screenshot timer
-            timerScreen = new DispatcherTimer();
-            timerScreen.Interval = TimeSpan.FromSeconds(timerScreenSetting);
-            timerScreen.Tick += timerScreen_Tick;
-            timerScreen.Start();
-
+            if(timerScreenSetting > 0)
+            {
+                timerScreen = new DispatcherTimer();
+                timerScreen.Interval = TimeSpan.FromSeconds(timerScreenSetting);
+                timerScreen.Tick += timerScreen_Tick;
+                timerScreen.Start();
+            }
         }
         private void timer_Tick(object sender, EventArgs e)
         {
@@ -60,8 +62,11 @@ namespace WorkAndTime
         {
 
             //TODO Check saving screens
-                var window = Application.Current.Windows.OfType<MainWindow>().First(); // to access controls
-                System.IO.Directory.CreateDirectory(@"c:\WorkAndTime\ScreenCaptures\" + window.ListBox_Projects.SelectedItem.ToString());
+
+            //var window = Application.Current.Windows.OfType<MainWindow>().First(); // to access controls
+            Project folder = (Project)ListBox_Projects.SelectedItem;
+            
+                System.IO.Directory.CreateDirectory(@"c:\WorkAndTime\ScreenCaptures\" + folder.Name);
                 double screenLeft = SystemParameters.VirtualScreenLeft;
                 double screenTop = SystemParameters.VirtualScreenTop;
                 double screenWidth = SystemParameters.VirtualScreenWidth;
@@ -73,7 +78,7 @@ namespace WorkAndTime
                     {
                         String filename = DateTime.Now.ToString("ddMMyyyy-hhmmss") + ".png";
                         g.CopyFromScreen((int)screenLeft, (int)screenTop, 0, 0, bmp.Size);
-                        bmp.Save("C:\\WorkAndTime\\ScreenCaptures\\" + window.ListBox_Projects.SelectedItem.ToString() + "\\" + filename);
+                        bmp.Save("C:\\WorkAndTime\\ScreenCaptures\\" + folder.Name + "\\" + filename);
                     }
                 }
         }
@@ -130,6 +135,21 @@ namespace WorkAndTime
             Button btn = (Button)sender;
             var projectName = btn.Tag.ToString();
             //TODO Open screenshots folder
+            Microsoft.Win32.OpenFileDialog dlg = new Microsoft.Win32.OpenFileDialog();
+            dlg.Multiselect = true;
+            // Set filter for file extension and default file extension 
+            dlg.DefaultExt = ".png";
+            dlg.Filter = "JPEG Files (*.png)|*.png|PNG Files (*.png)|*.png|JPG Files (*.jpg)|*.jpg|GIF Files (*.gif)|*.gif";
+            dlg.InitialDirectory = "C:\\WorkAndTime\\ScreenCaptures\\" + projectName + "\\";
+
+            // Display OpenFileDialog by calling ShowDialog method 
+            ///Nullable<bool> result = dlg.ShowDialog();
+
+            // Get the selected file name and display in a TextBox 
+            //if (result == true)
+            //{
+                // Open document 
+            //}
         }
     }
 }
