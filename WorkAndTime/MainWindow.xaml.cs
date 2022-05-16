@@ -126,9 +126,14 @@ namespace WorkAndTime
 
         private void Button_RemoveProject_Click(object sender, RoutedEventArgs e)
         {
-            var itemProject = ListBox_Projects.SelectedItem;
+            var itemProject = (Project)ListBox_Projects.SelectedItem;
             //TODO Remove project from database
-            //_context.Projects.Remove()
+
+            if(itemProject != null)
+                _context.Projects.Remove(itemProject);
+
+            _context.SaveChanges();
+            ListBox_Projects.ItemsSource = _context.Projects.ToList();
         }
 
         private void ShowScreenshots_Click(object sender, RoutedEventArgs e)
