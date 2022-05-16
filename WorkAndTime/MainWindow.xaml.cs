@@ -26,9 +26,10 @@ namespace WorkAndTime
             InitializeComponent();
             var conn = DbConnectionFactory.CreateTransient();
             _context = new ProjectContext(conn);
-            ListBox_Projects.ItemsSource = _context.Projects.ToList();
+            //ListBox_Projects.ItemsSource = _context.Projects.ToList();
             Button_StopTimer.IsEnabled = false;
-            Button_ShowResults.IsEnabled = false;
+            Button_StartTimer.IsEnabled = false;
+
         }
 
         private void Button_ShowResults_Click(object sender, RoutedEventArgs e)
@@ -150,6 +151,11 @@ namespace WorkAndTime
             //{
                 // Open document 
             //}
+        }
+
+        private void ListBox_Projects_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            Button_StartTimer.IsEnabled = true;
         }
     }
 }
