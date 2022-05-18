@@ -1,9 +1,8 @@
 ﻿using Effort;
 using System;
-using System.Diagnostics;
+using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
-using System.Timers;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Threading;
@@ -26,7 +25,32 @@ namespace WorkAndTime
             InitializeComponent();
             var conn = DbConnectionFactory.CreateTransient();
             _context = new ProjectContext(conn);
-            //ListBox_Projects.ItemsSource = _context.Projects.ToList();
+            if(_context.Projects.ToList().Count() == 0)
+            {
+                List<Project> projects = new List<Project>
+                {
+                    new Project
+                    {
+                        Id = 1,
+                        Description = "Description",
+                        Name = "Diplom",
+                        Status = "in progress",
+                        Year = 2022
+                    },
+                     new Project
+                    {
+                        Id = 2,
+                        Description = "Description",
+                        Name = "HomeWork",
+                        Status = "in progress",
+                        Year = 2022
+                    },
+                };
+                _context.Projects.Add(projects[0]);
+                _context.Projects.Add(projects[1]);
+                _context.SaveChanges();
+            }
+            ListBox_Projects.ItemsSource = _context.Projects.ToList();
             Button_StopTimer.IsEnabled = false;
             Button_StartTimer.IsEnabled = false;
 
@@ -81,7 +105,7 @@ namespace WorkAndTime
                         g.CopyFromScreen((int)screenLeft, (int)screenTop, 0, 0, bmp.Size);
                         bmp.Save("C:\\WorkAndTime\\ScreenCaptures\\" + folder.Name + "\\" + filename);
                     }
-                }
+          }
         }
         private void Button_StopTimer_Click(object sender, RoutedEventArgs e)
         {
@@ -89,7 +113,7 @@ namespace WorkAndTime
             var historyElement = new History() { TimePeriod = (DateTime.Now - startTime).ToString(@"hh\:mm\:ss"), Date = DateTime.Now, Progress = "0%", ProjectId = itemProject.Id, Project = itemProject };
             _context.History.Add(historyElement);
             _context.SaveChanges();
-            ListBox_History.Items.Add(historyElement);
+            ListBox_History.ItemsSource = _context.History.Where(d => d.ProjectId.Equals(itemProject.Id)).ToList();
             TextBlock_Timer.Text = "00:00:00";
             timer.Stop();
             timerScreen.Stop();
@@ -147,7 +171,8 @@ namespace WorkAndTime
             dlg.DefaultExt = ".png";
             dlg.Filter = "JPEG Files (*.png)|*.png|PNG Files (*.png)|*.png|JPG Files (*.jpg)|*.jpg|GIF Files (*.gif)|*.gif";
             dlg.InitialDirectory = "C:\\WorkAndTime\\ScreenCaptures\\" + projectName + "\\";
-
+            if (dlg.ShowDialog() == true) { }
+ 
             // Display OpenFileDialog by calling ShowDialog method 
             ///Nullable<bool> result = dlg.ShowDialog();
 
@@ -160,7 +185,10 @@ namespace WorkAndTime
 
         private void ListBox_Projects_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
+            var itemProject = ListBox_Projects.SelectedItem as Project;
             Button_StartTimer.IsEnabled = true;
+            ListBox_History.ItemsSource = null;
+            ListBox_History.ItemsSource = _context.History.Where(d=>d.ProjectId.Equals(itemProject.Id)).ToList();
         }
     }
 }

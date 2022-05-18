@@ -81,7 +81,7 @@
                         <ColumnDefinition Width="1*"/>
                     </Grid.ColumnDefinitions>
 
-                    <ListBox Grid.Row="0" Margin="5" Background="LightCyan" x:Name="ListBox_Projects">
+                    <ListBox Grid.Row="0" Margin="5" Background="LightCyan" SelectionChanged="ListBox_Projects_SelectionChanged" x:Name="ListBox_Projects">
                         <ListBox.ItemTemplate>
                             <DataTemplate>
                                 <TextBlock Text="{Binding Path=Name}"></TextBlock>
