@@ -195,6 +195,7 @@ namespace WorkAndTime
                 _context.Projects.Remove(itemProject);
             _context.SaveChanges();
             ListBox_Projects.ItemsSource = _context.Projects.ToList();
+            Button_StartTimer.IsEnabled = false;
         }
 
         private void ShowScreenshots_Click(object sender, RoutedEventArgs e)
@@ -211,10 +212,18 @@ namespace WorkAndTime
 
         private void ListBox_Projects_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            var itemProject = ListBox_Projects.SelectedItem as Project;
-            Button_StartTimer.IsEnabled = true;
-            ListBox_History.ItemsSource = null;
-            ListBox_History.ItemsSource = _context.History.Where(d => d.ProjectId.Equals(itemProject.Id)).ToList();
+            try
+            {
+                var itemProject = ListBox_Projects.SelectedItem as Project;
+                Button_StartTimer.IsEnabled = true;
+                ListBox_History.ItemsSource = null;
+                ListBox_History.ItemsSource = _context.History.Where(d => d.ProjectId.Equals(itemProject.Id)).ToList();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+            
         }
     }
 }
