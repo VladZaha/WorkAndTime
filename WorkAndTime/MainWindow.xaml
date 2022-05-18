@@ -29,9 +29,9 @@
             </Grid.RowDefinitions>
             <Grid Grid.Row="0">
                 <Grid.RowDefinitions>
-                    <RowDefinition/>
-                    <RowDefinition/>
-                    <RowDefinition/>
+                    <RowDefinition Height="1.5*"/>
+                    <RowDefinition Height="2*"/>
+                    <RowDefinition Height="1*"/>
                 </Grid.RowDefinitions>
                 <Grid Grid.Row="0" Background="Gray" Margin="10">
                     <Grid.RowDefinitions>
@@ -43,14 +43,14 @@
                     <TextBlock Grid.Row="0" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="26" FontFamily="Cascadia Mono Light">History</TextBlock>
                     <Grid Grid.Row="1">
                         <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="1.5*"/>
                             <ColumnDefinition Width="2*"/>
-                            <ColumnDefinition Width="1*"/>
-                            <ColumnDefinition Width="6*"/>
+                            <ColumnDefinition Width="2.5*"/>
+                            <ColumnDefinition Width="2*"/>
+                            <ColumnDefinition Width="7*"/>
                         </Grid.ColumnDefinitions>
-                        <TextBlock Grid.Column="0" HorizontalAlignment="Center" FontFamily="Comic Sans MS">Time Period</TextBlock>
-                        <TextBlock Grid.Column="1" HorizontalAlignment="Center" FontFamily="Comic Sans MS">Date</TextBlock>
-                        <TextBlock Grid.Column="2" HorizontalAlignment="Center" FontFamily="Comic Sans MS">Progress</TextBlock>
+                        <TextBlock Grid.Column="0" HorizontalAlignment="Center" FontFamily="Comic Sans MS" FontSize="14">Time Period</TextBlock>
+                        <TextBlock Grid.Column="1" HorizontalAlignment="Center" FontFamily="Comic Sans MS" FontSize="14">Date</TextBlock>
+                        <TextBlock Grid.Column="2" HorizontalAlignment="Center" FontFamily="Comic Sans MS" FontSize="14">Progress</TextBlock>
                     </Grid>
                     <ListBox Grid.Row="2" x:Name="ListBox_History" Margin="5" Background="LightGray">
                         <ListBox.ItemTemplate>
@@ -73,7 +73,7 @@
                 </Grid>
                 <Grid Grid.Row="1" Background="LightBlue" Margin="10">
                     <Grid.RowDefinitions>
-                        <RowDefinition Height="2*"/>
+                        <RowDefinition Height="3.5*"/>
                         <RowDefinition Height="2*"/>
                     </Grid.RowDefinitions>
                     <Grid.ColumnDefinitions>
@@ -98,19 +98,19 @@
                             <RowDefinition/>
                             <RowDefinition/>
                         </Grid.RowDefinitions>
-                        <TextBlock VerticalAlignment="Center" HorizontalAlignment="Left" Margin="5" FontFamily="Comic Sans MS">Project:</TextBlock>
+                        <TextBlock VerticalAlignment="Center" HorizontalAlignment="Left" Margin="5" FontFamily="Comic Sans MS" FontSize="14">Project:</TextBlock>
                         <Border Grid.Column="0" Grid.Row="0" CornerRadius="8" BorderBrush="SeaGreen" BorderThickness="2" VerticalAlignment="Center" Width="138" HorizontalAlignment="Right">
-                            <TextBox BorderBrush="Transparent" Background="Transparent" BorderThickness="0" x:Name="TextBox_ProjectName"></TextBox>
+                            <TextBox BorderBrush="Transparent" Background="Transparent" BorderThickness="0" x:Name="TextBox_ProjectName" FontSize="14"></TextBox>
                         </Border>
 
-                        <TextBlock Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="5" FontFamily="Comic Sans MS">Date:</TextBlock>
+                        <TextBlock Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="15 0" FontFamily="Comic Sans MS" FontSize="14">Date:</TextBlock>
                         <Border Grid.Column="1" Grid.Row="0" CornerRadius="8" BorderBrush="SeaGreen" BorderThickness="2" VerticalAlignment="Center" Width="150" HorizontalAlignment="Right">
-                            <DatePicker Background="Transparent" BorderBrush="Transparent" BorderThickness="0" x:Name="DatePicker_ProjectDate"></DatePicker>
+                            <DatePicker Background="Transparent" BorderBrush="Transparent" BorderThickness="0" x:Name="DatePicker_ProjectDate" FontSize="14"></DatePicker>
                         </Border>
 
-                        <TextBlock Grid.Column="0" Grid.Row="1" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="5" FontFamily="Comic Sans MS">Description:</TextBlock>
-                        <Border Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="2" CornerRadius="8" BorderBrush="SeaGreen" BorderThickness="2" VerticalAlignment="Center" Margin="75 0 0 0">
-                            <TextBox BorderBrush="Transparent" Background="Transparent" BorderThickness="0" x:Name="TextBox_ProjectDescription"></TextBox>
+                        <TextBlock Grid.Column="0" Grid.Row="1" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="5" FontFamily="Comic Sans MS" FontSize="14">Description:</TextBlock>
+                        <Border Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="2" CornerRadius="8" BorderBrush="SeaGreen" BorderThickness="2" VerticalAlignment="Center" Margin="90 0 0 0">
+                            <TextBox BorderBrush="Transparent" Background="Transparent" BorderThickness="0" x:Name="TextBox_ProjectDescription" FontSize="14"></TextBox>
                         </Border>
                     </Grid>
 
