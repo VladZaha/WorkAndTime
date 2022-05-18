@@ -1,11 +1,15 @@
 ﻿using Effort;
+using iTextSharp.text;
+using iTextSharp.text.pdf;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Threading;
+using Font = iTextSharp.text.Font;
 
 namespace WorkAndTime
 {
@@ -18,14 +22,13 @@ namespace WorkAndTime
         DispatcherTimer timerScreen;
         DateTime startTime;
         int timerScreenSetting = 10;
-        //Database context
         private ProjectContext _context;
         public MainWindow()
         {
             InitializeComponent();
             var conn = DbConnectionFactory.CreateTransient();
             _context = new ProjectContext(conn);
-            if(_context.Projects.ToList().Count() == 0)
+            if (_context.Projects.ToList().Count() == 0)
             {
                 List<Project> projects = new List<Project>
                 {
@@ -53,12 +56,49 @@ namespace WorkAndTime
             ListBox_Projects.ItemsSource = _context.Projects.ToList();
             Button_StopTimer.IsEnabled = false;
             Button_StartTimer.IsEnabled = false;
-
         }
 
         private void Button_ShowResults_Click(object sender, RoutedEventArgs e)
         {
-            //TODO Print PDF
+
+            var projects = _context.Projects.ToList();
+            var histories = _context.History.ToList();
+            //шрифт
+            BaseFont bfTimes = BaseFont.CreateFont(BaseFont.TIMES_BOLDITALIC, BaseFont.CP1252, false);
+            BaseFont bfTimes1 = BaseFont.CreateFont(BaseFont.HELVETICA, BaseFont.CP1250, false);
+            BaseFont bfTimes2 = BaseFont.CreateFont(BaseFont.HELVETICA, BaseFont.CP1257, false);
+            //колір
+            Font times = new Font(bfTimes, 12, Font.ITALIC, BaseColor.GREEN);
+            Font times1 = new Font(bfTimes1, 24, Font.BOLD, BaseColor.RED);
+            Font times2 = new Font(bfTimes2, 12, Font.BOLDITALIC, BaseColor.BLACK);
+            //запис
+            //робимо сам файл
+            Document doc = new Document();
+            PdfWriter.GetInstance(doc, new FileStream("input.pdf", FileMode.Append));
+            doc.Open();
+            foreach (var project in projects)
+            {
+                doc.Add(new Paragraph(project.Id.ToString() + ";" + project.Name + ";" + project.Description + ";" + project.Year.ToString() + ";" + project.Status + ";", times));
+                doc.Add(new Paragraph("---------------------------History----------------------------", times1));
+                foreach (var historyItem in histories.Where(d=>d.ProjectId == project.Id))
+                {
+                    string[] g = historyItem.TimePeriod.Split('-', ':');
+                    int fromH = int.Parse(g[0]);
+                    int fromM = int.Parse(g[1]);
+                    if (fromH > 0)
+                    {
+                        fromH = fromH * 60;
+                    }
+                    fromM = fromH + fromM;
+                    double x = fromM / 480 * 100;
+                    doc.Add(new Paragraph("    date                        range                work time                    progres", times2));
+                    doc.Add(new Paragraph(historyItem.Date.ToShortDateString() + "          " + historyItem.TimePeriod + "               " + x.ToString() + "                      " + x.ToString() + "%", times2));
+                    doc.Add(new Paragraph("______________________________________", times1));
+                }
+            }
+         
+            doc.Close();
+            System.Diagnostics.Process.Start("input.pdf");
         }
         private void Button_StartTimer_Click(object sender, RoutedEventArgs e)
         {
@@ -69,9 +109,7 @@ namespace WorkAndTime
             timer.Start();
             Button_StartTimer.IsEnabled = false;
             Button_StopTimer.IsEnabled = true;
-
-            //Start screenshot timer
-            if(timerScreenSetting > 0)
+            if (timerScreenSetting > 0)
             {
                 timerScreen = new DispatcherTimer();
                 timerScreen.Interval = TimeSpan.FromSeconds(timerScreenSetting);
@@ -85,27 +123,21 @@ namespace WorkAndTime
         }
         private void timerScreen_Tick(object sender, EventArgs e)
         {
-
-            //TODO Check saving screens
-
-            //var window = Application.Current.Windows.OfType<MainWindow>().First(); // to access controls
             Project folder = (Project)ListBox_Projects.SelectedItem;
-            
-                System.IO.Directory.CreateDirectory(@"c:\WorkAndTime\ScreenCaptures\" + folder.Name);
-                double screenLeft = SystemParameters.VirtualScreenLeft;
-                double screenTop = SystemParameters.VirtualScreenTop;
-                double screenWidth = SystemParameters.VirtualScreenWidth;
-                double screenHeight = SystemParameters.VirtualScreenHeight;
-
-                using (Bitmap bmp = new Bitmap((int)screenWidth, (int)screenHeight))
+            System.IO.Directory.CreateDirectory(@"c:\WorkAndTime\ScreenCaptures\" + folder.Name);
+            double screenLeft = SystemParameters.VirtualScreenLeft;
+            double screenTop = SystemParameters.VirtualScreenTop;
+            double screenWidth = SystemParameters.VirtualScreenWidth;
+            double screenHeight = SystemParameters.VirtualScreenHeight;
+            using (Bitmap bmp = new Bitmap((int)screenWidth, (int)screenHeight))
+            {
+                using (Graphics g = Graphics.FromImage(bmp))
                 {
-                    using (Graphics g = Graphics.FromImage(bmp))
-                    {
-                        String filename = DateTime.Now.ToString("ddMMyyyy-hhmmss") + ".png";
-                        g.CopyFromScreen((int)screenLeft, (int)screenTop, 0, 0, bmp.Size);
-                        bmp.Save("C:\\WorkAndTime\\ScreenCaptures\\" + folder.Name + "\\" + filename);
-                    }
-          }
+                    String filename = DateTime.Now.ToString("ddMMyyyy-hhmmss") + ".png";
+                    g.CopyFromScreen((int)screenLeft, (int)screenTop, 0, 0, bmp.Size);
+                    bmp.Save("C:\\WorkAndTime\\ScreenCaptures\\" + folder.Name + "\\" + filename);
+                }
+            }
         }
         private void Button_StopTimer_Click(object sender, RoutedEventArgs e)
         {
@@ -120,7 +152,7 @@ namespace WorkAndTime
             Button_StopTimer.IsEnabled = false;
             Button_StartTimer.IsEnabled = true;
         }
-        
+
         private void menuTimer_Click(object sender, RoutedEventArgs e)
         {
             MenuItem item = (MenuItem)sender;
@@ -143,19 +175,24 @@ namespace WorkAndTime
 
         private void Button_AddProject_Click(object sender, RoutedEventArgs e)
         {
-            _context.Projects.Add(new Project() {Name = TextBox_ProjectName.Text, Description = TextBox_ProjectDescription.Text, Year = DatePicker_ProjectDate.SelectedDate.Value.Year, Status = "inprogress" });
-            _context.SaveChanges();
-            ListBox_Projects.ItemsSource = _context.Projects.ToList();
+            try
+            {
+                _context.Projects.Add(new Project() { Name = TextBox_ProjectName.Text, Description = TextBox_ProjectDescription.Text, Year = DatePicker_ProjectDate.SelectedDate.Value.Year, Status = "inprogress" });
+                _context.SaveChanges();
+                ListBox_Projects.ItemsSource = _context.Projects.ToList();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+
         }
 
         private void Button_RemoveProject_Click(object sender, RoutedEventArgs e)
         {
             var itemProject = (Project)ListBox_Projects.SelectedItem;
-            //TODO Remove project from database
-
-            if(itemProject != null)
+            if (itemProject != null)
                 _context.Projects.Remove(itemProject);
-
             _context.SaveChanges();
             ListBox_Projects.ItemsSource = _context.Projects.ToList();
         }
@@ -164,23 +201,12 @@ namespace WorkAndTime
         {
             Button btn = (Button)sender;
             var projectName = btn.Tag.ToString();
-            //TODO Open screenshots folder
             Microsoft.Win32.OpenFileDialog dlg = new Microsoft.Win32.OpenFileDialog();
             dlg.Multiselect = true;
-            // Set filter for file extension and default file extension 
             dlg.DefaultExt = ".png";
             dlg.Filter = "JPEG Files (*.png)|*.png|PNG Files (*.png)|*.png|JPG Files (*.jpg)|*.jpg|GIF Files (*.gif)|*.gif";
             dlg.InitialDirectory = "C:\\WorkAndTime\\ScreenCaptures\\" + projectName + "\\";
             if (dlg.ShowDialog() == true) { }
- 
-            // Display OpenFileDialog by calling ShowDialog method 
-            ///Nullable<bool> result = dlg.ShowDialog();
-
-            // Get the selected file name and display in a TextBox 
-            //if (result == true)
-            //{
-                // Open document 
-            //}
         }
 
         private void ListBox_Projects_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -188,7 +214,7 @@ namespace WorkAndTime
             var itemProject = ListBox_Projects.SelectedItem as Project;
             Button_StartTimer.IsEnabled = true;
             ListBox_History.ItemsSource = null;
-            ListBox_History.ItemsSource = _context.History.Where(d=>d.ProjectId.Equals(itemProject.Id)).ToList();
+            ListBox_History.ItemsSource = _context.History.Where(d => d.ProjectId.Equals(itemProject.Id)).ToList();
         }
     }
 }

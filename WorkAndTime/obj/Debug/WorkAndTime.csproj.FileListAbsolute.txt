@@ -59,3 +59,6 @@ D:\ASP.NET\ITStepLesons\TeamProjects\PE021\WokATime\WorkAndTime\obj\Debug\WorkAn
 D:\ASP.NET\ITStepLesons\TeamProjects\PE021\WokATime\WorkAndTime\obj\Debug\WorkAndTime.csproj.CopyComplete
 D:\ASP.NET\ITStepLesons\TeamProjects\PE021\WokATime\WorkAndTime\obj\Debug\WorkAndTime.exe
 D:\ASP.NET\ITStepLesons\TeamProjects\PE021\WokATime\WorkAndTime\obj\Debug\WorkAndTime.pdb
+D:\ASP.NET\ITStepLesons\TeamProjects\PE021\WokATime\WorkAndTime\bin\Debug\BouncyCastle.Crypto.dll
+D:\ASP.NET\ITStepLesons\TeamProjects\PE021\WokATime\WorkAndTime\bin\Debug\itextsharp.dll
+D:\ASP.NET\ITStepLesons\TeamProjects\PE021\WokATime\WorkAndTime\bin\Debug\itextsharp.xml
